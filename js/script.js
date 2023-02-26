@@ -14,47 +14,30 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 
-let ul = document.querySelector('.student-list');
 
-ul.innerHTML = `<img class="avatar" src=${Object.values(data[0][3][0])} alt="Profile Picture">`
-
-
-
-
-/***
-<h3>${list[i][0][1] list[i][0][2]}</h3>
-<span class="email">${list[i][1]}ethel.dean@example.com</span>
-</div>
-<div class="joined-details">
-<span class="date">Joined 12-15-2005</span>
-</div>`
-***/
-
-
-
-
-
-/*
 function showPage (list, page) {
    let startIndex  = (page * 9) - 9;
    let endIndex = (page * 9);
    let studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
    for (let i=0; i<list.length ; i++) {
-      if (i >= startIndex && <= endIndex) {
-         let studentCard = document.createElement('li');
-         studentCard.className = 'student-item cf';
-         
-         studentCard.appendChild(cardInfo);
-            
+      if (i >= startIndex && 1 < endIndex) {
+         let studentItem = document.createElement('li');
+         studentItem.className = 'student-item cf';
+         studentItem.innerHTML = `<div class="student-details">
+         <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">
+         <h3>${list[i].name.first} ${list[i].name.last}</h3>
+         <span class="email">${list[i].email}</span>
+         </div>
+         <div class="joined-details">
+            <span class="date">Joined ${list[i].registered.date}</span>
+         </div>`;
+         studentList.appendChild(studentItem);
       };
    };
 }
-*/
 
-
-
-
+showPage(data, 1);
 
 
 
