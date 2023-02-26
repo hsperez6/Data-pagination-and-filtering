@@ -21,7 +21,7 @@ function showPage (list, page) {
    let studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
    for (let i=0; i<list.length ; i++) {
-      if (i >= startIndex && 1 < endIndex) {
+      if (i >= startIndex && i < endIndex) {
          studentList.insertAdjacentHTML(
             'beforeend',
             `<li class="student-item cf">
@@ -35,19 +35,11 @@ function showPage (list, page) {
             </div>
           </li>`
           );
-         
+      } else {
+
       };
    };
 }
-
-showPage(data, 1);
-
-
-
-
-
-
-
 
 
 
