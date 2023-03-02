@@ -137,16 +137,19 @@ let searchIcon = document.querySelector('button img');
 
 function doSearch (Input, list) {
    let matches = [];
+   let listOfNames = [];
    for (let i=0; i<list.length ; i++) {
       let fullName = `${list[i].name.first} ${list[i].name.last}`;
-      let fullNameLower = fullName.toLowerCase();
-      if (Input.value.length !== 0 && fullNameLower.includes(Input.value.toLowerCase())) {
+      listOfNames.push(fullName);
+   };
+   for (let i=0; i<list.length ; i++) {
+      if (Input.value.length !== 0 && listOfNames[i].toLowerCase().includes(Input.value.toLowerCase())) {
          matches.push(list[i]);
          showPage(matches,1);
          addPagination(matches);
-      } else if (!fullNameLower.includes(Input.value.toLowerCase())) {
-         let studentList = document.querySelector('.student-list');
-         studentList.innerHTML = '<li>No results found</li>'; 
+      // } else if (Input.value.length !== 0 && listOfNames[i].toLowerCase().includes(Input.value.toLowerCase()) === true) {
+      //     let studentList = document.querySelector('.student-list');
+      //     studentList.innerHTML = '<li>No results found</li>'; 
       } else if (Input.value.length === 0) {
          showPage(data, 1)
          addPagination(data)
@@ -154,7 +157,7 @@ function doSearch (Input, list) {
    };
    
 };
-
+// names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())
 
 searchIcon.addEventListener('click', (e) => {
    e.preventDefault();
@@ -162,6 +165,5 @@ searchIcon.addEventListener('click', (e) => {
 });
 
 searchInput.addEventListener('keyup', (e) => {
-   "use strict";
    doSearch(searchInput, data);
  });
