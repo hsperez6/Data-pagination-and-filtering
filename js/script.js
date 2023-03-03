@@ -4,17 +4,18 @@ FSJS Project 2 - Data Pagination and Filtering
 */
 
 /*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
+`showPage` function
+ * The showPage funciton takes two parameters `list` and `page`
+ * The `list` parameter is the array of student objects used to fill in template literal with student information
+ * The `page` parameter is used to create the `startIndex` and `endIndex` variables. It is also used for selecting 
+   which students to be displayed, as well as the page number to be displayed on.
+ * `studentList` variable is created to select the area in the index.HTML in which the student information will be
+   displayed
+ * First, the `studentList` is cleared of all content using `.innerHTML = '';`
+ * A for loop loops through the entire array, and if the students are within the `startIndex` and `endIndex` of the
+   given page, the template literal within the `.insertAdjacentHTML` operator is inserted at the end of the 
+   `studentList` node.
 */
-
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
-
-
 function showPage (list, page) {
    let startIndex  = (page * 9) - 9;
    let endIndex = (page * 9);
@@ -41,8 +42,21 @@ function showPage (list, page) {
 
 
 /*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+`addPagination` function
+ * `addPagination` function takes one parameter: the array used to create the number of pages.
+ * Since there are nine students shown per page, we divide the length of the array by 9 and round up with Math.ciel 
+   to get a number between 1 - max. This number is saved onto the `numOfPages` variable.
+ * `linkList` variable is created to select the area in the index.html file in which the pagination buttons will be
+   created.
+ * `linkList` is cleared of any content using `.innerHTML ='';`
+ * A for loop is used with `.insertAdjacentHTML()` to create `li` and `button` tags, fill text with page number, 
+   and append the pagination buttons to the `linkList` variable.
+ * The class of 'active' is added to the first `button` tag in the document, which automatically selected and displays
+   the first page of students.
+ * A 'click' eventListener is added to the `linkList` section, but it only works if the clicked node is a button. 
+   The event handler then adds the 'active' class name to the clicked button and removes the 'active' class from the 
+   previous button.
+ * Lastly, the `showPage` function is called to display the page number in the textContent of the target.
 */
 function addPagination (list) {
    let numOfPages = Math.ceil(list.length / 9);
@@ -66,12 +80,9 @@ function addPagination (list) {
    });
  }
 
-
-
 // Call functions
 showPage(data, 1)
 addPagination(data);
-
 
 /**
  * Add Search Components
@@ -87,54 +98,29 @@ header.insertAdjacentHTML(
  </label>`
  );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***
- * When the "Search" is performed, the student data is filtered so that only students whose 
-   name includes the search value are shown. The search should be case-insensitive and work 
-   for partial matches. For example, if the value B or b is typed into the search field, 
-   students with “Bill” in the name would be shown. Likewise, if LL were typed into the 
-   search field, students with the first name "Bill" would appear, as well as students with 
-   the last name "Williams".
-  
- * Pro Tip: To improve the functionality and improve the user experience, consider adding a 
-   keyup event listener to the search input so that the list filters in real time as the user 
-   types. This should be in addition to making the search button clickable since pasting text 
-   into the search bar might not trigger the keyup event.
-
- * Pro Tip: Remember you have already created a function to show nine students per page in 
-   Step 3. All you really need to do here is create a new student list based on the search 
-   matches and then use that new list as an argument when calling the already existing 
-   function to display the students.
-
-
-
-
- * Handle No Search Matches
- * If no matches are found for a search, display a “No results found” type message on the 
-   page.
- * Note: Don't use the built-in alert() method for this. The "No results found" message 
-   should be printed to the page.  
- */
-
-
- 
-   
 let searchInput = document.querySelector('#search');
 let searchIcon = document.querySelector('button img'); 
 
+/***
+`doSearch` function
+ * The `doSearch` function takes two parameters: `input` and `list`.
+ * The `input` parameter takes in the keys types into the searchbox.
+ * The `list` parameter takes the array of student objects.
+ * First, we create a `matches` variable to hold all the student objects whose name matches the search input.
+ * Second, we loop through the `list` parameter.
+    * Inside the loop we create a variable `fullName` to hold the full name of each individual student object.
+    * Then, we convert full name string to all lowercase using the `.toLowerCase()` method and save it to a second variable
+      called `fullNameLow`.
+    * We then use a conditional inside the loop to compare the search input to every name in the `list` parameter
+    * If there is a match, the object at that index is added to the `matches` variable using the `.push()` method.
+    * End of for loop
+ * After the loop is finished, we use a conditional to one of three outcomes.
+    * If the user has not keyed in any text, the conditional will display all students including total pages
+    * If the user has keyed in text in the searchbox and any matches have been found, the conditional will display the matched
+      students with proper pagination
+    * For everything else, the conditional will display a "No results found" message on the page with zero pagination buttons.
+ */
+ 
 function doSearch (Input, list) {
    let matches = [];
    for (let i=0; i<list.length ; i++) {
@@ -157,7 +143,9 @@ function doSearch (Input, list) {
    }
 };
    
-
+/***
+`.addEventLister` to search box and search icon
+ */
 searchIcon.addEventListener('click', (e) => {
    e.preventDefault();
    doSearch(searchInput, data);
